@@ -55,8 +55,8 @@ class TaskTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('TaskTag', 'App\\CommonBundle\\Model\\TaskTag', RelationMap::ONE_TO_MANY, array('id' => 'task_id', ), null, null, 'TaskTags');
-        $this->addRelation('Tag', 'App\\CommonBundle\\Model\\Tag', RelationMap::MANY_TO_MANY, array(), null, null, 'Tags');
+        $this->addRelation('TaskTag', 'App\\CommonBundle\\Model\\TaskTag', RelationMap::ONE_TO_MANY, array('id' => 'task_id', ), 'CASCADE', null, 'TaskTags');
+        $this->addRelation('Tag', 'App\\CommonBundle\\Model\\Tag', RelationMap::MANY_TO_MANY, array(), 'CASCADE', null, 'Tags');
     } // buildRelations()
 
 } // TaskTableMap

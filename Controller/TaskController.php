@@ -27,11 +27,17 @@ class TaskController extends Controller
    * @Route("", name="_app_common_task_index")
    * @Template("AppCommonBundle:Task:index.html.twig")
    *
-   * @link http://www.propelorm.org/reference/model-criteria.html#column_filter_methods   Column Filter Methods
-   * @link http://www.propelorm.org/documentation/03-basic-crud.html#using_custom_sql     Using Custom SQL
+   * @link http://www.propelorm.org/reference/model-criteria.html#column_filter_methods         Column Filter Methods
+   * @link http://www.propelorm.org/documentation/03-basic-crud.html#using_custom_sql           Using Custom SQL
+   * @link http://www.propelorm.org/documentation/03-basic-crud.html#query_termination_methods  Paginated list of results
    */
   public function indexAction()
   {
+    // AuthorQuery::create()->count();
+
+    // $authorPager = AuthorQuery::create()->paginate($page = 1, $maxPerPage = 10);
+    // $authorPager->getNbResults(); // ->getLinks(5),
+    
     $tasks = TaskQuery::create()
       #->filterByTag(TagQuery::create()->findPk(1))
       #->joinWith('Book.Publisher')
@@ -75,8 +81,7 @@ class TaskController extends Controller
    */
   public function editAction($id)
   {
-    $q = new TaskQuery();
-    $task = $q->findPk($id);
+    $task = TaskQuery::create()->findPk($id);
     // OR // $task = TaskQuery::create()->findPk($id);
     // TaskQuery::create()->findOneByFirstName('Таск')
     if ( ! $task)
@@ -98,7 +103,16 @@ class TaskController extends Controller
    */
   public function saveAction(Request $request)
   {
-    $task = new Task();
+    $id = $request->get('id');
+    //$id = @$post['id'];
+    if ($id)
+    {
+      $task = TaskQuery::create()->findOneById($id);
+    } else
+    {
+      $task = new Task();
+    }
+    
     $form = $this->createForm(new TaskType(), $task);
     // $task = $form->getData();
     $form->bindRequest($request);

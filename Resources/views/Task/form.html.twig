@@ -8,6 +8,8 @@
 <a href="{{ path('_app_common_task_index') }}">&laquo; Список задач</a>
 
 <form action="{{ path('_app_common_task_save') }}" method="post" {{ form_enctype(form) }}>
+  <input type="hidden" name="id" value="{{ form.vars.value.id }}" />
+
   {# {{ form_widget(form) }} - отрендерить всю форму#}
   {{ form_errors(form) }} {# Глобальные ошибки валидации #}
 
@@ -24,8 +26,10 @@
   <div>{{ form_errors(form.tags) }}</div>
   <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e }}">
       {% for tag in form.tags %}
-          {{ form_row(tag.id, { 'label': ' ', 'type': 'hidden', 'attr': { } }) }}
-          <li>{{ form_widget(tag.name) }}</li>
+          <li>
+            {{ form_widget(tag.id, { 'label': ' ', 'type': 'hidden', 'attr': { } }) }}
+            {{ form_widget(tag.name) }}
+          </li>
       {% endfor %}
 
       <li><a href="#" class="action-add-tag">Добавить тег</a></li>
