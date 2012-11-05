@@ -1,0 +1,59 @@
+{% extends "AppCommonBundle::layout.html.twig" %}
+
+{% block title "AppCommonBundle Learning Form " %}
+
+{% block content %}
+
+Debug: {{ debug }}<br>
+
+{% include 'AppCommonBundle:Learning:part.html.twig' with {'option': 'value'} only %}
+
+<div>Имя задачи: {{ form.vars.value.name }}</div>
+
+<form action="{{ path('_app_common_learning_form') }}" method="post" {{ form_enctype(form) }}>
+  {# {{ form_widget(form) }} - отрендерить всю форму#}
+  
+  {{ form_errors(form) }} {# Глобальные ошибки валидации #}
+
+  <div>
+    {{ form_label(form.name, 'Задание') }}
+    {{ form_errors(form.name) }}
+    {{ form_widget(form.name, { 'attr': {'class': 'task_class'} }) }}
+  </div>
+  
+  {{ form_row(form.description) }}
+  {{ form_row(form.dueDate) }}
+
+  {##}
+  <h3>{{ form_label(form.tags, 'Теги:') }}</h3>
+  <div>{{ form_errors(form.tags) }}</div>
+  <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e }}">
+      {% for tag in form.tags %}
+          {{ form_row(tag.id, { 'label': ' ', 'type': 'hidden', 'attr': { } }) }}
+          <li>{{ form_widget(tag.name) }}</li>
+      {% endfor %}
+  </ul>
+  
+  {{ form_rest(form) }} {#  - Отобразить оставшиеся поля и активации автоматической защиты от CSRF #}
+
+  <input type="submit" />
+</form>
+
+<a href="http://symfony-gu.ru/documentation/ru/html/reference/forms/twig_reference.html">Справочник функций Twig для работы с формами</a>
+
+{% endblock %}
+
+{% block footer %}
+{{ parent() }}
+[L3]
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% javascripts
+    '@AppCommonBundle/Resources/public/js/demo3.js' %}
+    <script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+{% endblock %}
+
+

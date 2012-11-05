@@ -1,0 +1,42 @@
+{% extends "::2columns.html.twig" %}
+
+{% block title "AppCommonBundle Learning Form [2L]" %}
+
+{% block messages %}
+    {% if app.session.hasFlash('success') %}
+      <div style="color: green;">
+        {{ app.session.getFlash('success') }}
+      </div>
+    {% endif %}
+    {% if app.session.hasFlash('notice') %}
+      <div style="color: #08C;">
+        {{ app.session.getFlash('notice') }}
+      </div>
+    {% endif %}
+    {% if app.session.hasFlash('error') %}
+      <div style="color: #f66;">
+        {{ app.session.getFlash('error') }}
+      </div>
+    {% endif %}
+{% endblock %}
+
+{% block left %}
+Left from layout.htm.twig [2L]
+{% endblock %}
+
+{% block content %}
+Content from layout.htm.twig [2L]
+{% endblock %}
+
+{% block footer %}
+{{ parent() }}
+[L2]
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% javascripts
+    '@AppCommonBundle/Resources/public/js/demo2.js' %}
+    <script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+{% endblock %}

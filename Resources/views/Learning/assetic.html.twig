@@ -1,0 +1,14 @@
+{% extends "AppCommonBundle::layout.html.twig" %}
+
+{% block title "AppCommonBundle Learning Assetic " %}
+
+{% block content %}
+<div>Assetic Name: {{ param }}</div>
+CONTENT
+{% endblock %}
+
+{% block js %}
+    {% javascripts '@AppCommonBundle/Resources/public/js/demo1.js.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

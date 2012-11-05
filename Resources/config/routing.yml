@@ -1,0 +1,12 @@
+app_common_homepage:
+    pattern:  /index/{name}
+    defaults: { _controller: AppCommonBundle:Default:index }
+
+app_common_learning:
+    resource: "@AppCommonBundle/Controller/LearningController.php"
+    type:     annotation
+    prefix:   /learning
+
+app_common_task:
+    resource: "@AppCommonBundle/Controller/TaskController.php"
+    type:     annotation

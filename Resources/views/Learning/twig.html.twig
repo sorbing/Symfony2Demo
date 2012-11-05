@@ -1,0 +1,18 @@
+{% extends "AppCommonBundle::layout.html.twig" %}
+
+
+{% block title "AppCommonBundle Learning Form " %}
+
+
+{% block content %}
+{{ img_url|wrapimg({'class': 'test'}) }}<br>
+
+{{ camelzebra('text') }}<br>
+
+{{ html|raw }}<br>
+
+{{ global_variable_name }}<br>
+{#% if resetting is defined and resetting %}OK{% endif %#}
+
+{#{ link(img_url) }#}
+{% endblock %}

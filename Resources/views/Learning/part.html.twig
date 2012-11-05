@@ -1,0 +1,12 @@
+{% block footer %}
+[L3 include]
+{% endblock %}
+
+[L3 include]
+
+{% block javascripts %}
+{% javascripts
+    '@AppCommonBundle/Resources/public/js/demo4.js' %}
+    <script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+{% endblock %}

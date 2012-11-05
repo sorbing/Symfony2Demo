@@ -1,0 +1,72 @@
+{% extends "AppCommonBundle::layout.html.twig" %}
+
+{% block title "AppCommonBundle Learning Form " %}
+
+{% block content %}
+<h1>{{ form.vars.value.name }}</h1>
+
+<a href="{{ path('_app_common_task_index') }}">&laquo; Список задач</a>
+
+<form action="{{ path('_app_common_task_save') }}" method="post" {{ form_enctype(form) }}>
+  {# {{ form_widget(form) }} - отрендерить всю форму#}
+  {{ form_errors(form) }} {# Глобальные ошибки валидации #}
+
+  <div>
+    {{ form_label(form.name, 'Задание') }}
+    {{ form_errors(form.name) }}
+    {{ form_widget(form.name, { 'attr': {'class': 'task_class'} }) }}
+  </div>
+  
+  {{ form_row(form.description) }}
+  {{ form_row(form.dueDate) }}
+
+  <h3>{{ form_label(form.tags, 'Теги:') }}</h3>
+  <div>{{ form_errors(form.tags) }}</div>
+  <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e }}">
+      {% for tag in form.tags %}
+          {{ form_row(tag.id, { 'label': ' ', 'type': 'hidden', 'attr': { } }) }}
+          <li>{{ form_widget(tag.name) }}</li>
+      {% endfor %}
+
+      <li><a href="#" class="action-add-tag">Добавить тег</a></li>
+  </ul>
+  
+  {{ form_rest(form) }} {#  - Отобразить оставшиеся поля и активации автоматической защиты от CSRF #}
+
+  <input type="submit" />
+</form>
+
+<a href="http://symfony-gu.ru/documentation/ru/html/reference/forms/twig_reference.html">Справочник функций Twig для работы с формами</a>
+
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+
+  $(document).ready(function() {
+
+      $('ul.tags li:has(input)').map(function(){
+        $(this).append('<a href="#" class="action-remove-tag">[del]</a>');
+      });
+
+      $('.action-add-tag').on('click', function(e) {
+        e.preventDefault();
+        
+        // Get the data-prototype we explained earlier
+        var prototype = $('ul.tags').attr('data-prototype');
+        var newForm = prototype.replace(/__name__/g, $('ul.tags').children('li:has(input)').length);
+        var $newFormLi = $('<li></li>').append(newForm);
+        $newFormLi.find('label').remove();
+        $newFormLi.append('<a href="#" class="action-remove-tag">[del]</a>');
+        $(this).closest('li').before($newFormLi);
+      });
+
+      $('.action-remove-tag').live('click', function(e){
+        e.preventDefault();
+        $(this).closest('li').remove();
+      });
+  });
+
+
+</script>
+{% endblock %}

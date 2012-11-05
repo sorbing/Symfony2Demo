@@ -1,0 +1,7 @@
+<h1>Learning</h1>
+
+<ul>
+{% for route_name,route in routes %}
+    <li>{{ route_name }}: {{ route.pattern }} - {{ route.defaults._controller }}</li>
+{% endfor %}
+</ul>

@@ -1,0 +1,38 @@
+{% extends "AppCommonBundle::layout.html.twig" %}
+
+{% block title "Список задач" %}
+
+{% block content %}
+
+<table border="1">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Tags</th>
+    <th>Due Date</th>
+    <th>Actions</th>
+  </tr>
+{% for item in items %}
+  <tr>
+    <td>{{ item.id }}</td>
+    <td>{{ item.name }}</td>
+    <td>{{ item.description }}</td>
+    <td>
+      {% for tag in item.getTags() %}
+        {{ tag.name }}{% if not loop.last %}, {% endif %}
+      {% endfor %}
+    </td>
+    <td>{{ item.dueDate|date('Y-m-d') }}</td>
+    <td>
+      <a href="{{ path('_app_common_task_edit', {'id': item.id}) }}">Edit</a>,
+      <a href="{{ path('_app_common_task_clone', {'id': item.id}) }}"></a>Clone,
+      <a href="{{ path('_app_common_task_delete', {'id': item.id}) }}">Delete</a>
+    </td>
+  </tr>
+{% endfor %}
+</table>
+
+<a href="{{ path('_app_common_task_add') }}">Добавить задачу</a>
+
+{% endblock %}

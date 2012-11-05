@@ -1,0 +1,9 @@
+## YAML Template.
+---
+App\CommonBundle\Entity\Task:
+  properties:
+    task:
+      - NotBlank: ~
+    dueDate:
+      - NotBlank: ~
+      - Type: \DateTime

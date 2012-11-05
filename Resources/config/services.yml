@@ -1,0 +1,29 @@
+parameters:
+# app_common.example.class: App\CommonBundle\Example
+  root_path: %kernel.root_dir%/../web
+
+services:
+#    app_common.example:
+#        class: %app_common.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+
+# Регистрируем расширение для шаблонов Twig
+  app.twig.extension:
+    class: App\CommonBundle\Twig\AppExtension
+    # можно передать аргумент конструктору
+    arguments: [ "@service_container" ]
+    tags:
+      - { name: twig.extension }
+    # можно вызвать кастомный метод и передать аргументы при инициализации сервиса
+    calls:
+      - [ setRootPath, [ "%kernel.root_dir%/../web" ] ]
+
+
+# Регистрируем расширение для PHP шаблонов
+  dashboard.helper:
+    class: App\CommonBundle\Templating\Helper\DashboardHelper
+    tags:
+      - { name: templating.helper, alias: dashboard }
+#    calls:
+#      - [ setContainer, [ "@service_container" ] ]
